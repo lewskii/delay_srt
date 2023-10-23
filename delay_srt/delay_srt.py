@@ -7,7 +7,6 @@ def delay_timestamp(original: str, delay: int) -> str:
     h, m, s, ms = (int(i) for i in original)
     original_time = timedelta(hours=h, minutes=m, seconds=s, milliseconds=ms)
     new = original_time + timedelta(milliseconds=delay)
-    print(str(new).replace('.', ','))
     return str(new)[:-3].replace('.', ',')
 
 def delay_srt(path: str, delay_ms: int):
@@ -29,7 +28,6 @@ def delay_srt(path: str, delay_ms: int):
             line
         )
         if timestamps:
-            print(timestamps)
             start, end = timestamps
             start = delay_timestamp(start, delay_ms)
             end = delay_timestamp(end, delay_ms)
