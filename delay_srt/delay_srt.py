@@ -1,6 +1,5 @@
 from .time import Time
 import re
-import argparse
 
 
 def delay_timestamp(original: tuple[str], delay: int) -> str:
