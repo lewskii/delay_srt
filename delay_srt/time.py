@@ -7,7 +7,10 @@ Classes:
 class Time:
     """Simple representation of time at a scale from milliseconds to hours.
     
-    Supports addition. Formatted as "HH:MM:SS,mmm" as a string.
+    Formatted as "HH:MM:SS,mmm" as a string.
+
+    Addition between Time objects is supported. Additionally, given a Time `t`
+    and an integer `n`, `t + n` is equivalent to `t + Time(milliseconds=n)`.
     
     Attributes:
     - h: hours
@@ -89,10 +92,18 @@ class Time:
         return f"Time({self.h}h, {self.min}min, {self.s}s, {self.ms}ms)"
     
     def __add__(self, other):
-        return Time(
-            self.h + other.h,
-            self.min + other.min,
-            self.s + other.s,
-            self.ms + other.ms
-        )
+        try:
+            return Time(
+                self.h + other.h,
+                self.min + other.min,
+                self.s + other.s,
+                self.ms + other.ms
+            )
+        except AttributeError:
+            return Time(
+                self.h,
+                self.min,
+                self.s,
+                self.ms + int(other)
+            )
     
