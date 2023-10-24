@@ -1,9 +1,13 @@
 from argparse import ArgumentParser
 from .delay_srt import delay_srt
+from textwrap import dedent
 
 parser = ArgumentParser(
     prog="delay_srt",
-    description="delay everything in an SRT file by a given amount"
+    description=dedent("""
+        Delays every subtitle in a SubRip file by a given amount.
+        The file is modified in place.
+    """)
 )
 parser.add_argument(
     "file",

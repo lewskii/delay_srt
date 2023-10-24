@@ -1,8 +1,26 @@
+"""Tools for delaying SubRip files.
+
+Functions:
+- delay_srt: delay the subtitles in a SubRip file
+"""
 from .time import Time
 import re
 
 
-def delay_srt(path: str, delay_ms: int):
+def delay_srt(path: str, delay_ms: int) -> None:
+    """Delay every subtitle in a SubRip file by a given number of milliseconds.
+
+    The file is modified in place.
+    
+    Parameters:
+    - path: the path to the file
+    - delay_ms: the delay to be applied, in milliseconds
+
+    Exceptions:
+
+    The function will probably raise all sorts of exceptions if the file that
+    `path` points to is somehow malformed.
+    """
     with open(path) as file:
         subtitle_blocks = [
             b.split('\n')
