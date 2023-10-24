@@ -15,8 +15,8 @@ class Time:
     - s: seconds
     - ms: milliseconds
     """
-    ms_max = 1000
-    s_max = min_max = 60
+    __MS_MAX = 1000
+    __S_MAX = __MIN_MAX = 60
 
     def __init__(
             self,
@@ -72,15 +72,15 @@ class Time:
         self.__standardise()
     
     def __standardise(self) -> None:
-        if self.ms >= Time.ms_max:
-            self.__s += self.ms // Time.ms_max
-            self.__ms %= Time.ms_max
-        if self.s >= Time.s_max:
-            self.__min += self.s // Time.s_max
-            self.__s %= Time.s_max
-        if self.min >= Time.min_max:
-            self.__h += self.min // Time.min_max
-            self.__min %= Time.min_max
+        if self.ms >= Time.__MS_MAX:
+            self.__s += self.ms // Time.__MS_MAX
+            self.__ms %= Time.__MS_MAX
+        if self.s >= Time.__S_MAX:
+            self.__min += self.s // Time.__S_MAX
+            self.__s %= Time.__S_MAX
+        if self.min >= Time.__MIN_MAX:
+            self.__h += self.min // Time.__MIN_MAX
+            self.__min %= Time.__MIN_MAX
 
     def __str__(self) -> str:
         return f"{self.h:02}:{self.min:02}:{self.s:02},{self.ms:03}"
