@@ -4,7 +4,7 @@ import re
 
 def __delay_timestamp(timestamp_parts: tuple[str], delay_ms: int) -> Time:
     original_time = Time(*(int(i) for i in timestamp_parts))
-    return original_time + Time(milliseconds=delay_ms)
+    return original_time + delay_ms
 
 def delay_srt(path: str, delay_ms: int):
     with open(path) as file:
