@@ -2,7 +2,7 @@ from .time import Time
 import re
 
 
-def delay_timestamp(original: tuple[str], delay: int) -> Time:
+def __delay_timestamp(original: tuple[str], delay: int) -> Time:
     original_time = Time(*(int(i) for i in original))
     return original_time + Time(milliseconds=delay)
 
@@ -22,8 +22,8 @@ def delay_srt(path: str, delay_ms: int):
                 line
             )
             if len(timestamps) == 2:
-                start = delay_timestamp(timestamps[0], delay_ms)
-                end = delay_timestamp(timestamps[1], delay_ms)
+                start = __delay_timestamp(timestamps[0], delay_ms)
+                end = __delay_timestamp(timestamps[1], delay_ms)
                 line = f"{start} --> {end}\n"
                 waiting_for_next_subtitle = True
         
