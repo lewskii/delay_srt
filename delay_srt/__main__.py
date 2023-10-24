@@ -6,7 +6,7 @@ parser = ArgumentParser(
     description="delay everything in an SRT file by a given amount"
 )
 parser.add_argument(
-    "path",
+    "file",
     help="the path to the file you want to delay",
     type=str
 )
