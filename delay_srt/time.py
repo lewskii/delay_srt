@@ -3,6 +3,7 @@
 Classes:
 - Time: a simple representation of time
 """
+import re
 
 class Time:
     """Simple representation of time at a scale from milliseconds to hours.
@@ -20,6 +21,21 @@ class Time:
     """
     __MS_MAX = 1000
     __S_MAX = __MIN_MAX = 60
+
+    @classmethod
+    def all_from_string(
+        cls,
+        string: str,
+        pattern: str | re.Pattern[str] = r"(\d+):(\d+):(\d+),(\d+)"
+    ):
+        """Find all valid Times in a given string and return them in a list.
+
+        Parameters:
+        - string: the string that will be parsed
+        - pattern: a regex pattern containing capture groups for hours, minutes,
+        seconds, and milliseconds, in that order
+        """
+        return [Time(*(int(i) for i in r)) for r in re.findall(pattern, string)]
 
     def __init__(
             self,

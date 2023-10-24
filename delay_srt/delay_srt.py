@@ -17,13 +17,10 @@ def delay_srt(path: str, delay_ms: int):
         if waiting_for_next_subtitle and not line.strip():
             waiting_for_next_subtitle = False
         else:
-            timestamps = re.findall(
-                r"(\d+):(\d+):(\d+),(\d+)",
-                line
-            )
+            timestamps = Time.all_from_string(line)
             if len(timestamps) == 2:
-                start = __delay_timestamp(timestamps[0], delay_ms)
-                end = __delay_timestamp(timestamps[1], delay_ms)
+                start = timestamps[0] + delay_ms
+                end = timestamps[1] + delay_ms
                 line = f"{start} --> {end}\n"
                 waiting_for_next_subtitle = True
         
