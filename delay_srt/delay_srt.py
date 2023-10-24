@@ -1,13 +1,12 @@
-from datetime import timedelta
+from .time import Time
 import re
 import argparse
 
 
-def delay_timestamp(original: str, delay: int) -> str:
-    h, m, s, ms = (int(i) for i in original)
-    original_time = timedelta(hours=h, minutes=m, seconds=s, milliseconds=ms)
-    new = original_time + timedelta(milliseconds=delay)
-    return str(new)[:-3].replace('.', ',')
+def delay_timestamp(original: tuple[str], delay: int) -> str:
+    original_time = Time(*(int(i) for i in original))
+    new_time = original_time + Time(milliseconds=delay)
+    return str(new_time)
 
 def delay_srt(path: str, delay_ms: int):
     with open(path) as file:
