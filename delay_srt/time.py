@@ -96,8 +96,3 @@ class Time:
             self.ms + other.ms
         )
     
-if __name__ == "__main__":
-    foo = Time(seconds=30)
-    foo += foo
-    print(foo + foo)
-    
