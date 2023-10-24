@@ -12,7 +12,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "delay",
-    help="delay in milliseconds, negative values work too",
+    help="delay in milliseconds",
     type=int
 )
 
