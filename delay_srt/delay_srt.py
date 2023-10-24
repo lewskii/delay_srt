@@ -8,23 +8,21 @@ def __delay_timestamp(timestamp_parts: tuple[str], delay_ms: int) -> Time:
 
 def delay_srt(path: str, delay_ms: int):
     with open(path) as file:
-        lines = file.readlines()
+        subtitle_blocks = [
+            b.split('\n')
+            for b
+            # split on lines that are empty or only contain whitespace
+            in re.split(r"\n\s*\n", file.read())
+        ]
 
     new_lines = []
-    
-    waiting_for_next_subtitle = False
-    for line in lines:
-        if waiting_for_next_subtitle and not line.strip():
-            waiting_for_next_subtitle = False
-        else:
-            timestamps = Time.all_from_string(line)
-            if len(timestamps) == 2:
-                start = timestamps[0] + delay_ms
-                end = timestamps[1] + delay_ms
-                line = f"{start} --> {end}\n"
-                waiting_for_next_subtitle = True
-        
-        new_lines.append(line)
+    for block in subtitle_blocks:
+        # index 1 always has the line with the timestamps on it
+        start, end = Time.all_from_string(block[1])
+        block[1] = f"{start + delay_ms} --> {end + delay_ms}"
+        new_lines.extend([s + '\n' for s in block])
+        new_lines.append("\n")
 
     with open(path, 'w') as file:
-        file.writelines(new_lines)
+        # idk why but there are always two extra newlines at the end
+        file.writelines(new_lines[:-2])
