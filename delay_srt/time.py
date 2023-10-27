@@ -3,6 +3,7 @@
 Classes:
 - Time: a simple representation of time
 """
+from math import ceil
 import re
 
 class Time:
@@ -91,6 +92,21 @@ class Time:
         self.__standardise()
     
     def __standardise(self) -> None:
+        if self.ms < 0:
+            delta_ms = abs(self.ms)
+            self.__s -= ceil(delta_ms / Time.__MS_MAX)
+            self.__ms = (Time.__MS_MAX - delta_ms % Time.__MS_MAX) % Time.__MS_MAX
+        if self.s < 0:
+            delta_s = abs(self.s)
+            self.__min -= ceil(delta_s / Time.__S_MAX)
+            self.__s = (Time.__S_MAX - delta_s % Time.__S_MAX) % Time.__S_MAX
+        if self.min < 0:
+            delta_min = abs(self.min)
+            self.__h -= ceil(delta_min / Time.__MIN_MAX)
+            self.__min = (Time.__MIN_MAX - delta_min % Time.__MIN_MAX) % Time.__MIN_MAX
+        if self.h < 0:
+            self.__h = self.__min = self.__s = self.__ms = 0
+            
         if self.ms >= Time.__MS_MAX:
             self.__s += self.ms // Time.__MS_MAX
             self.__ms %= Time.__MS_MAX
