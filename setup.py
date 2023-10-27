@@ -5,7 +5,7 @@ with open("./README.md") as readme:
 
 setuptools.setup(
     name = "delay_srt",
-    version = "0.1.0",
+    version = "0.1.1",
     description = "Delays the subtitles in a SubRip (.srt) file.",
     long_description = long_description,
     long_description_content_type = "text/markdown",
