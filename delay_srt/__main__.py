@@ -21,4 +21,4 @@ parser.add_argument(
 )
 
 args = parser.parse_args()
-delay_srt(args.path, args.delay)
+delay_srt(args.file, args.delay)
