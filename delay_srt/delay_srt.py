@@ -11,7 +11,7 @@ def delay_srt(path: str, delay_ms: int) -> None:
     """Delay every subtitle in a SubRip file by a given number of milliseconds.
 
     The file is modified in place.
-    
+
     Parameters:
     - path: the path to the file
     - delay_ms: the delay to be applied, in milliseconds
@@ -31,6 +31,10 @@ def delay_srt(path: str, delay_ms: int) -> None:
 
     new_lines = []
     for block in subtitle_blocks:
+        if block[0] == '':
+            new_lines.append("\n")
+            continue
+
         # index 1 always has the line with the timestamps on it
         start, end = Time.all_from_string(block[1])
         block[1] = f"{start + delay_ms} --> {end + delay_ms}"
