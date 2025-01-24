@@ -12,7 +12,7 @@ Delays the subtitles in a SubRip (.srt) file by a given amount of time.
 
     The following command should work for most people:
 
-        pip install ogg4osu
+        pip install delay_srt
 
     If you want/need something more specialised, I'm sure you already know what you need to do differently.
 
