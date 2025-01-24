@@ -5,14 +5,15 @@ Classes:
 """
 import re
 
+
 class Time:
     """Simple representation of time at a scale from milliseconds to hours.
-    
+
     Formatted as "HH:MM:SS,mmm" as a string.
 
     Addition between Time objects is supported. Additionally, given a Time `t`
     and an integer `n`, `t + n` is equivalent to `t + Time(milliseconds=n)`.
-    
+
     Attributes:
     - h: hours
     - min: minutes
@@ -54,7 +55,7 @@ class Time:
     def h(self):
         """hours"""
         return self.__h
-    
+
     @h.setter
     def h(self, new: int):
         self.__h = new
@@ -64,7 +65,7 @@ class Time:
     def min(self):
         """minutes"""
         return self.__min
-    
+
     @min.setter
     def min(self, new: int):
         self.__min = new
@@ -74,7 +75,7 @@ class Time:
     def s(self):
         """seconds"""
         return self.__s
-    
+
     @s.setter
     def s(self, new: int):
         self.__s = new
@@ -84,29 +85,31 @@ class Time:
     def ms(self):
         """milliseconds"""
         return self.__ms
-    
+
     @ms.setter
     def ms(self, new: int):
         self.__ms = new
         self.__standardise()
-    
+
     def __standardise(self) -> None:
-        if self.ms >= Time.__MS_MAX:
+        if self.ms >= Time.__MS_MAX or self.ms < 0:
             self.__s += self.ms // Time.__MS_MAX
             self.__ms %= Time.__MS_MAX
-        if self.s >= Time.__S_MAX:
+        if self.s >= Time.__S_MAX or self.s < 0:
             self.__min += self.s // Time.__S_MAX
             self.__s %= Time.__S_MAX
-        if self.min >= Time.__MIN_MAX:
+        if self.min >= Time.__MIN_MAX or self.min < 0:
             self.__h += self.min // Time.__MIN_MAX
             self.__min %= Time.__MIN_MAX
+        if self.h < 0:
+            raise Exception("Time can't be less than 0")
 
     def __str__(self) -> str:
         return f"{self.h:02}:{self.min:02}:{self.s:02},{self.ms:03}"
-    
+
     def __repr__(self) -> str:
         return f"Time({self.h}h, {self.min}min, {self.s}s, {self.ms}ms)"
-    
+
     def __add__(self, other):
         try:
             return Time(
@@ -122,4 +125,3 @@ class Time:
                 self.s,
                 self.ms + int(other)
             )
-    
